@@ -9,5 +9,38 @@
   <h1 class="text-3xl font-bold underline">
     Hello world!
   </h1>
+
+  <div id="navbar"></div>
+
+  
+  <div id="footer"></div>
+
+
+
+
+      <script>
+        const loadComponents = (id, url) =>  {
+            return fetch(url)
+            .then((response) => response.text())
+            .then((html) => {
+                document.getElementById(id).innerHTML = html;
+            });
+        }
+
+        window.onload = async () => {
+            // load navbar first so scripts can attach
+            await loadComponents('navbar', 'src/components/navBar.html');
+            // init nav handlers that expect elements inside the injected navbar
+            if (window.initNav) window.initNav();
+
+            // load the rest (can be async)
+            loadComponents('header', 'src/components/navBar.html');
+            loadComponents('body', 'src/components/body.html');
+            loadComponents('services', 'src/sections/service.html');
+            loadComponents('shape', 'src/sections/shape.html');
+            loadComponents('contact', 'src/sections/contact.html');
+            loadComponents('footer', 'src/sections/footer.html');
+        }
+    </script>
 </body>
 </html>
